@@ -1,5 +1,6 @@
 package three43n.bedfix;
 
+import ibxm.Player;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -47,22 +48,22 @@ public class BedFix {
         @SubscribeEvent
         public void overrideSleep(PlayerInteractEvent.RightClickBlock event) {
 
-            boolean isRemote = event.getEntityPlayer().getEntityWorld().isRemote;
-            Block b = event.getEntityPlayer().getEntityWorld().getBlockState(event.getPos()).getBlock();
-            if (isRemote) return;
+            boolean isRemote = event.getWorld().isRemote;
+            Block b = event.getWorld().getBlockState(event.getPos()).getBlock();
             if (b != Blocks.BED) return;
+            if (isRemote) return;
 
 
             BlockPos bpos = event.getPos();
-            World w = event.getEntityPlayer().getEntityWorld();
+            World w = event.getWorld();
+            EntityPlayer p = event.getEntityPlayer();
             if (w.playerEntities.size() > 1) return;
-            WorldProvider.WorldSleepResult wr = w.provider.canSleepAt(event.getEntityPlayer(), bpos);
-            EntityPlayer.SleepResult pr = StandaloneSleepResult.trySleep(event.getEntityPlayer(), bpos);
+            WorldProvider.WorldSleepResult wr = w.provider.canSleepAt(p, bpos);
+            EntityPlayer.SleepResult pr = StandaloneSleepResult.trySleep(p, bpos);
 
             processSleepResults(event.getEntityPlayer(), w, bpos, wr, pr);
 
 
-//            logger.log(Level.ERROR, "YOU JUST SLEPT BITCH");
             event.setResult(Event.Result.DENY);
             if (event.isCancelable()) event.setCanceled(true);
 
