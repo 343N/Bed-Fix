@@ -79,8 +79,12 @@ public class BedFix {
             p.sendStatusMessage(new TextComponentTranslation("tile.bed.noSleep", new Object[0]), true);
         if (wr == wr.ALLOW)
             if (pr == EntityPlayer.SleepResult.OK) {
-                w.setWorldTime(0);
-                w.getWorldInfo().setRaining(false);
+                if (w.getGameRules().getBoolean("doDaylightCycle"))
+                {
+                    long i = w.getWorldTime() + 24000L;
+                    w.setWorldTime(i - i % 24000L);
+                }
+                if (w.getGameRules().getBoolean("doWeatherCycle")) w.provider.resetRainAndThunder();
                 p.bedLocation = b;
                 p.setSpawnPoint(p.bedLocation, false);
                 new PlayerWakeUpEvent(p, true, true, true);
