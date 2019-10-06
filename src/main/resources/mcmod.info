@@ -1,0 +1,12 @@
+[{
+  "modid": "bedbugworkaround",
+  "name": "Bed Bug Workaround",
+  "description": "Makes beds imitate bed behaviour without actually getting you in the bed, avoiding a game-breaking bug.",
+  "version": "1.0.0.0",
+  "mcversion": "1.12.2",
+  "logoFile": "assets/examplemod/textures/logo.png",
+  "url": "minecraftforge.net/",
+  "updateJSON": "minecraftforge.net/versions.json",
+  "authorList": ["343N"],
+  "credits": "I'd like to thank my mother and father."
+}]
