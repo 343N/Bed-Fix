@@ -4,26 +4,18 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
-import net.minecraft.network.play.client.CPacketPlayer;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
-import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
 
 import java.awt.*;
@@ -73,6 +65,7 @@ public class BedFix {
 //            logger.log(Level.ERROR, "YOU JUST SLEPT BITCH");
             event.setResult(Event.Result.DENY);
             if (event.isCancelable()) event.setCanceled(true);
+
         }
     }
 
@@ -88,6 +81,7 @@ public class BedFix {
                 w.setWorldTime(0);
                 w.getWorldInfo().setRaining(false);
                 p.bedLocation = b;
+                p.setSpawnPoint(p.bedLocation, false);
                 new PlayerWakeUpEvent(p, true, true, true);
             } else printToPlayer(p, pr);
 
